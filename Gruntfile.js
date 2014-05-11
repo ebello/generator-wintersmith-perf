@@ -54,6 +54,35 @@ module.exports = function (grunt) {
         ]
       }
     },
+    hashres: {
+      options: {
+        fileNameFormat: '${name}.${hash}.${ext}',
+        renameFiles: true
+      },
+      css: {
+        src: [ 'build/**/*.css' ],
+        dest: ['build/**/*.html', 'build/**/*.json']
+      },
+      js: {
+        src: [ 'build/**/*.js' ],
+        dest: 'build/**/*.html'
+      },
+      images: {
+        src: [
+          'build/**/*.png',
+          'build/**/*.jpg',
+          'build/**/*.svg',
+          'build/**/*.ico'
+        ],
+        dest: [
+          'build/**/*.html',
+          'build/**/*.js',
+          'build/**/*.css',
+          'build/**/*.md',
+          'build/**/*.json'
+        ]
+      }
+    },
     imagemin: {
       dist: {
         files: [
@@ -114,6 +143,19 @@ module.exports = function (grunt) {
       jsvendor: {
         files: ['scripts/**/*.js', '!scripts/client/**/*.js'],
         tasks: ['copy:js']
+      }
+    },
+    uglify: {
+      production: {
+        // options: {
+        //   mangle: false
+        // },
+        files: [{
+          expand: true,
+          cwd: 'build/assets/',
+          src: ['**/*.js', '!**/*.min.js'],
+          dest: 'build/assets/',
+        }],
       }
     },
     wintersmith: {
@@ -202,45 +244,6 @@ module.exports = function (grunt) {
     //     ]
     //   }
     // },
-    // hashres: {
-    //   options: {
-    //     encoding: 'utf8',
-    //     fileNameFormat: '${name}.${hash}.cache.${ext}',
-    //     renameFiles: true
-    //   },
-    //   css: {
-    //     options: {
-    //     },
-    //     src: [
-    //       'build/js/app.min.js',
-    //       'build/css/app.css',
-    //       'build/css/normalize.css' ],
-    //     dest: 'build/**/*.html'
-    //   },
-    //   js: {
-    //     options: {
-    //     },
-    //     src: [
-    //       'build/js/app.min.js',
-    //       'build/css/app.css',
-    //       'build/css/normalize.css' ],
-    //     dest: 'build/**/*.html'
-    //   },
-    //   images: {
-    //     options: {
-    //     },
-    //     src: [
-    //       'build/**/*.png',
-    //       'build/**/*.jpg'
-    //     ],
-    //     dest: [
-    //       'build/**/*.html',
-    //       'build/**/*.js',
-    //       'build/**/*.css',
-    //       'build/**/*.md'
-    //     ]
-    //   }
-    // },
   });
 
   // Grunt Tasks
@@ -252,16 +255,14 @@ module.exports = function (grunt) {
   // grunt.registerTask('dev', [
   //   'watch'
   // ]);
-  grunt.registerTask('dev', ['clean', 'newer:imagemin', 'wintersmith:build', 'sass:dev', 'browserify', 'copy', 'connect:devserver', 'watch']);
+  grunt.registerTask('build-common', ['clean', 'newer:imagemin', 'wintersmith:build', 'browserify', 'copy']);
+
+  grunt.registerTask('dev', ['build-common', 'sass:dev', 'connect:devserver', 'watch']);
 
   grunt.registerTask('cacheBust', [
     'hashres:images',
     'hashres:css',
     'hashres:js'
-  ]);
-
-  grunt.registerTask('preview', [
-    'shell:previewSite'
   ]);
 
   grunt.registerTask('prebuild', [
@@ -290,14 +291,18 @@ module.exports = function (grunt) {
     'postbuild'
   ]);
 
-  grunt.registerTask('deployStaging', [
-    'buildStaging',
-    's3:staging'
-  ]);
+  // grunt.registerTask('deployStaging', [
+  //   'buildStaging',
+  //   's3:staging'
+  // ]);
+  //
+  // grunt.registerTask('deployProduction', [
+  //   'buildProduction',
+  //   's3:production',
+  //   'release'
+  // ]);
 
-  grunt.registerTask('deployProduction', [
-    'buildProduction',
-    's3:production',
-    'release'
-  ]);
+  grunt.registerTask('deploy', ['deploy:prepare', 's3']);
+  grunt.registerTask('deploy:test', ['deploy:prepare', 'connect:deploytest']);
+  grunt.registerTask('deploy:prepare', ['build-common', 'sass:prod', 'uglify', 'hashres']);
 };
