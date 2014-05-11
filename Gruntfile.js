@@ -137,6 +137,138 @@ module.exports = function (grunt) {
         }
       }
     },
+    aws: grunt.file.readJSON('.grunt-aws.json'),
+    s3: {
+      options: {
+        key: '<%= aws.key %>',
+        secret: '<%= aws.secret %>',
+        access: 'public-read'
+      },
+      staging: {
+        options: {
+          bucket: '[INSERT STAGING BUCKET HERE]'
+        },
+        upload: [
+          {
+            // CSS
+            src: 'build/**/*.css',
+            dest: '/',
+            rel: 'build',
+            options: {
+              gzip: true,
+              headers: {
+                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+                "Cache-Control": "private",
+                "Expires": new Date(Date.now() + 63072000000).toUTCString()
+              }
+            }
+          },
+          {
+            // JS
+            src: 'build/**/*.js',
+            dest: '/',
+            rel: 'build',
+            options: {
+              gzip: true,
+              headers: {
+                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+                "Cache-Control": "private",
+                "Expires": new Date(Date.now() + 63072000000).toUTCString()
+              }
+            }
+          },
+          {
+            // SVG
+            src: 'build/**/*.svg',
+            dest: '/',
+            rel: 'build',
+            options: {
+              gzip: true,
+              headers: {
+                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+                "Cache-Control": "private",
+                "Expires": new Date(Date.now() + 63072000000).toUTCString()
+              }
+            }
+          },
+          {
+            // ICO
+            src: 'build/**/*.ico',
+            dest: '/',
+            rel: 'build',
+            options: {
+              headers: {
+                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+                "Expires": new Date(Date.now() + 63072000000).toUTCString()
+              }
+            }
+          },
+          {
+            // PNG
+            src: 'build/**/*.png',
+            dest: '/',
+            rel: 'build',
+            options: {
+              gzip: true,
+              headers: {
+                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+                "Expires": new Date(Date.now() + 63072000000).toUTCString()
+              }
+            }
+          },
+          {
+            // JPG
+            src: 'build/**/*.jpg',
+            dest: '/',
+            rel: 'build',
+            options: {
+              gzip: true,
+              headers: {
+                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+                "Expires": new Date(Date.now() + 63072000000).toUTCString()
+              }
+            }
+          },
+          {
+            // GIF
+            src: 'build/**/*.gif',
+            dest: '/',
+            rel: 'build',
+            options: {
+              gzip: true,
+              headers: {
+                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+                "Expires": new Date(Date.now() + 63072000000).toUTCString()
+              }
+            }
+          },
+          {
+            // HTML
+            src: 'build/**/*.html',
+            dest: '/',
+            rel: 'build',
+            options: {
+              gzip: true
+            }
+          },
+          {
+            // JSON
+            src: 'build/**/*.json',
+            dest: '/',
+            rel: 'build',
+            options: {
+              gzip: true
+            }
+          },
+        ]
+      },
+      prod: {
+        options: {
+          bucket: '[INSERT STAGING BUCKET HERE]'
+        },
+        upload: '<%= s3.staging.upload %>'
+      }
+    },
     watch: {
       options : {
         livereload: true
@@ -199,30 +331,6 @@ module.exports = function (grunt) {
     //   }
     // },
 
-    // lineremover: {
-    //   html: {
-    //     files: [
-    //       {
-    //         expand: true,
-    //         cwd: 'build/',
-    //         src: ['**/*.html'],
-    //         dest: 'build/',
-    //         ext: '.html'
-    //       }
-    //     ]
-    //   },
-    //   xml: {
-    //     files: [
-    //       {
-    //         expand: true,
-    //         cwd: 'build/',
-    //         src: ['**/*.xml'],
-    //         dest: 'build/',
-    //         ext: '.xml'
-    //       }
-    //     ]
-    //   }
-    // },
     // s3: {
     //   options: {
     //     key: process.env.AWS_ACCESS_KEY_ID,
