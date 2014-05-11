@@ -1,0 +1,17 @@
+{
+  "locals": {
+    "url": "http://localhost:8888"
+  },
+  "templates": "./templates",
+  "contents": "./contents",
+  "output": "./build",
+  "plugins": [
+  	"wintersmith-nunjucks"
+  ],
+  "ignore": [
+  	"**/config.rb",
+  	"**/sass",
+  	"**/.sass-cache",
+    "**/.DS_Store"
+  ]
+}

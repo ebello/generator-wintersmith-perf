@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--[if lt IE 9]><html lang="en" class="ie no-js{% if page.htmlclass %} {{page.htmlclass}}{% endif %}{% if (page.redirect or page.redirectid) and page.nometaredirect != true %} redirect{% endif %}"><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en" class="no-js{% if page.htmlclass %} {{page.htmlclass}}{% endif %}{% if (page.redirect or page.redirectid) and page.nometaredirect != true %} redirect{% endif %}"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+  <title>{{page.title}}{% if page.url != '/index.html' %} - [SITE TITLE]{% endif %}</title>
+  {% if page.redirect and page.nometaredirect != true %}
+  <meta http-equiv="refresh" content="0; url={{ page.redirect }}" />
+  {% endif %}
+  {% if page.redirectid and page.nometaredirect != true %}
+  <meta http-equiv="refresh" content="0; url={% for p in site.pages_by_id[page.redirectid] %}{{p.url}}{% endfor %}" />
+  {% endif %}
+  {% if page.description %}
+  <meta name="description" content="{{ page.description }}" />
+  {% endif %}
+  <link href="assets/all.css" rel="stylesheet" type="text/css" />
+  {% block styles %}{% endblock %}
+  <link rel="shortcut icon" href="favicon.ico" />
+  <!--[if lt IE 9]>html5ie.min.js<![endif]-->
+</head>
+<body>
+  <section>
+    {% block content %}{% endblock %}
+
+    <!-- primary navigation -->
+    <nav>
+      <ul>
+        {% for item in site.primary_navigation %}
+          {% include nav.html %}
+        {% endfor %}
+      </ul>
+    </nav>
+  </section>
+
+<!-- LOAD MODERNIZR -->
+  {% block scripts %}{% endblock %}
+
+  <script type="text/javascript">
+    window._gaq = [['_setAccount','[ANALYTICS CODE]'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load([
+      {
+        load: 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+        complete: function() {
+          if (!window.jQuery)
+            Modernizr.load('jquery.min.js');
+        }
+      },
+      {
+        load: ['main.js'{% if page.pagescript %}, '{{page.pagescript}}'{% endif %}]
+      },
+      {
+        load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+      }
+    ]);
+  </script>
+</body>
+</html>

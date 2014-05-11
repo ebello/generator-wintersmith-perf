@@ -1,0 +1,25 @@
+{
+  "name": "generator-wintersmith-perf",
+  "version": "0.0.0",
+  "description": "Seed for building a static site with node",
+  "main": "index.js",
+  "author": "Ernie Bello",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^3.46.1",
+    "grunt": "^0.4.4",
+    "grunt-browserify": "^2.0.8",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-connect": "^0.7.1",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-imagemin": "^0.7.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-sass": "^0.7.3",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-newer": "^0.7.0",
+    "grunt-wintersmith": "0.0.2",
+    "load-grunt-tasks": "^0.4.0",
+    "wintersmith": "^2.0.10",
+    "wintersmith-nunjucks": "^0.5.0"
+  }
+}
