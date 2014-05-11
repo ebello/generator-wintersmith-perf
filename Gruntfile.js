@@ -83,6 +83,22 @@ module.exports = function (grunt) {
         ]
       }
     },
+    htmlmin: {
+      dist: {
+        options: {
+          removeComments: true,
+          collapseWhitespace: true,
+          minifyJS: true,
+          minifyCSS: true
+        },
+        files: [{
+          expand: true,
+          cwd: 'build/',
+          src: ['**/*.html'],
+          dest: 'build/'
+        }]
+      }
+    },
     imagemin: {
       dist: {
         files: [
@@ -98,7 +114,8 @@ module.exports = function (grunt) {
     jshint: {
       client: [
         'scripts/client/*.js',
-        'Gruntfile.js' ]
+        'Gruntfile.js'
+      ]
     },
     sass: {
       dev: {
@@ -181,13 +198,6 @@ module.exports = function (grunt) {
     //     command: 'npm version patch'
     //   }
     // },
-    // uglify: {
-    //   production: {
-    //     files: {
-    //       'build/js/app.min.js': 'build/js/app.min.js'
-    //     }
-    //   }
-    // },
 
     // lineremover: {
     //   html: {
@@ -252,24 +262,9 @@ module.exports = function (grunt) {
     'shell:bumpVersion'
   ]);
 
-  // grunt.registerTask('dev', [
-  //   'watch'
-  // ]);
   grunt.registerTask('build-common', ['clean', 'newer:imagemin', 'wintersmith:build', 'browserify', 'copy']);
 
   grunt.registerTask('dev', ['build-common', 'sass:dev', 'connect:devserver', 'watch']);
-
-  grunt.registerTask('cacheBust', [
-    'hashres:images',
-    'hashres:css',
-    'hashres:js'
-  ]);
-
-  grunt.registerTask('prebuild', [
-    'clean:build',
-    'browserify2',
-    'compass:dist'
-  ]);
 
   grunt.registerTask('postbuild', [
     'lineremover',
@@ -304,5 +299,5 @@ module.exports = function (grunt) {
 
   grunt.registerTask('deploy', ['deploy:prepare', 's3']);
   grunt.registerTask('deploy:test', ['deploy:prepare', 'connect:deploytest']);
-  grunt.registerTask('deploy:prepare', ['build-common', 'sass:prod', 'uglify', 'hashres']);
+  grunt.registerTask('deploy:prepare', ['build-common', 'sass:prod', 'uglify', 'hashres', 'htmlmin']);
 };
