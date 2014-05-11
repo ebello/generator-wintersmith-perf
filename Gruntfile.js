@@ -262,9 +262,9 @@ module.exports = function (grunt) {
           },
         ]
       },
-      prod: {
+      production: {
         options: {
-          bucket: '[INSERT STAGING BUCKET HERE]'
+          bucket: '[INSERT PRODUCTION BUCKET HERE]'
         },
         upload: '<%= s3.staging.upload %>'
       }
@@ -324,88 +324,18 @@ module.exports = function (grunt) {
           config: './config.json'
         }
       }
-    },
-    // shell: {
-    //   bumpVersion: {
-    //     command: 'npm version patch'
-    //   }
-    // },
-
-    // s3: {
-    //   options: {
-    //     key: process.env.AWS_ACCESS_KEY_ID,
-    //     secret: process.env.AWS_SECRET_ACCESS_KEY,
-    //     access: 'public-read'
-    //   },
-    //   staging: {
-    //     options: {
-    //       bucket: 'livestaging.davidtucker.net'
-    //     },
-    //     upload: [
-    //       {
-    //         src: 'build/**/*.*',
-    //         dest: '/',
-    //         rel: 'build'
-    //       }
-    //     ]
-    //   },
-    //   production: {
-    //     options: {
-    //       bucket: 'davidtucker.net'
-    //     },
-    //     upload: [
-    //       {
-    //         src: 'build/**/*.*',
-    //         dest: '/',
-    //         rel: 'build'
-    //       }
-    //     ]
-    //   }
-    // },
+    }
   });
 
   // Grunt Tasks
-
-  grunt.registerTask('release', [
-    'shell:bumpVersion'
-  ]);
+  grunt.registerTask('default', ['dev']);
 
   grunt.registerTask('build-common', ['clean', 'newer:imagemin', 'wintersmith:build', 'browserify', 'copy']);
 
   grunt.registerTask('dev', ['build-common', 'sass:dev', 'connect:devserver', 'watch']);
 
-  grunt.registerTask('postbuild', [
-    'lineremover',
-    'imagemin:dist',
-    'uglify:production',
-    'cacheBust',
-    'cssmin:production'
-  ]);
-
-  grunt.registerTask('buildStaging', [
-    'prebuild',
-    'wintersmith:staging',
-    'postbuild'
-  ]);
-
-  grunt.registerTask('buildProduction', [
-    'prebuild',
-    'wintersmith:production',
-    'postbuild'
-  ]);
-
-  // grunt.registerTask('deployStaging', [
-  //   'buildStaging',
-  //   's3:staging'
-  // ]);
-  //
-  // grunt.registerTask('deployProduction', [
-  //   'buildProduction',
-  //   's3:production',
-  //   'release'
-  // ]);
-
-  grunt.registerTask('deploy', ['deploy:prepare', 's3']);
+  grunt.registerTask('deploy:staging', ['deploy:prepare', 's3:staging']);
+  grunt.registerTask('deploy:production', ['deploy:prepare', 's3:production']);
   grunt.registerTask('deploy:test', ['deploy:prepare', 'connect:deploytest']);
   grunt.registerTask('deploy:prepare', ['build-common', 'sass:prod', 'uglify', 'hashres', 'htmlmin']);
 };
