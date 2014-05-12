@@ -31,6 +31,16 @@
         {% endfor %}
       </ul>
     </nav>
+
+    <!-- secondary navigation -->
+    <nav>
+      <ul>
+        {% set nav = env.helpers.getNavigation(contents, page.filepath.dir) %}
+        {% for item in nav %}
+          {% include "includes/nav.html" %}
+        {% endfor %}
+      </ul>
+    </nav>
   </section>
 
   <script src="/assets/vendor/modernizr.min.js"></script>
