@@ -3,6 +3,14 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
+    autoprefixer: {
+      multiple_files: {
+        expand: true,
+        cwd: 'build/',
+        src: ['**/*.css'],
+        dest: 'build/'
+      }
+    },
     browserify: {
       // vendor: {
       //   src: [],
@@ -294,7 +302,7 @@ module.exports = function (grunt) {
       },
       css: {
         files: ['styles/**/*.scss'],
-        tasks: ['sass:dev']
+        tasks: ['sass:dev', 'autoprefixer']
       },
       html: {
         files: ['contents/**', 'templates/**'],
@@ -355,10 +363,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build-common', ['clean', 'wintersmith:build', 'browserify', 'copy']);
 
-  grunt.registerTask('dev', ['build-common', 'sass:dev', 'connect:devserver', 'watch']);
+  grunt.registerTask('dev', ['build-common', 'sass:dev', 'autoprefixer', 'connect:devserver', 'watch']);
 
   grunt.registerTask('deploy:staging', ['deploy:prepare', 's3:staging']);
   grunt.registerTask('deploy:production', ['deploy:prepare', 's3:production']);
   grunt.registerTask('deploy:test', ['deploy:prepare', 'connect:deploytest']);
-  grunt.registerTask('deploy:prepare', ['newer:imagemin', 'build-common', 'sass:prod', 'uglify', 'hashres', 'htmlmin']);
+  grunt.registerTask('deploy:prepare', ['newer:imagemin', 'build-common', 'sass:prod', 'autoprefixer', 'uglify', 'hashres', 'htmlmin']);
 };
