@@ -24,9 +24,13 @@ module.exports = function(env, callback) {
           if(currentObj.metadata.hasOwnProperty("primarynavorder")) {
             currentObj.primarynavorder = currentObj.metadata.primarynavorder;
           }
+          if(currentObj.metadata.hasOwnProperty("navorder")) {
+            currentObj.navorder = currentObj.metadata.navorder;
+          }
+          currentObj.filepath.dir = currentObj.filepath.relative.substring(0, currentObj.filepath.relative.lastIndexOf("/"));
           output.push(currentObj);
         }
-        else if(isDirectory(currentObj)) {
+        else if (isDirectory(currentObj)) {
           output = output.concat(env.helpers.getAllPages(currentObj));
         }
       }
@@ -44,6 +48,19 @@ module.exports = function(env, callback) {
     return primary_nav;
 	};
 
+  env.helpers.getNavigation = function(contents, folder) {
+    var pages = env.helpers.getAllPages(contents);
+    var nav = pages.filter(function(page) {
+      return page.metadata.navorder && page.filepath.dir == folder;
+    });
+    sortByKey(nav, 'navorder');
+    return nav;
+  };
+
+  env.helpers.rawjson = function(obj) {
+    return JSON.stringify(obj);
+  }
+
   callback();
 
   var isFile = function(currentItem) {
@@ -56,10 +73,6 @@ module.exports = function(env, callback) {
   function sortByKey(arr, key) {
     return arr.sort(function(a, b) {
       var x = a[key], y = b[key];
-      // console.log(a['metadata.primarynavorder']);
-      // console.log(b.metadata.primarynavorder);
-      // console.log(x);
-      // console.log(y);
       return (x < y) ? -1 : ((x > y) ? 1 : 0);
     });
   }
