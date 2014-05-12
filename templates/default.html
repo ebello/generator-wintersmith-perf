@@ -7,8 +7,8 @@
   {% if page.metadata.redirect and page.metadata.nometaredirect != true %}
   <meta http-equiv="refresh" content="0; url={{ page.metadata.redirect }}" />
   {% endif %}
-  {% if page.redirectid and page.nometaredirect != true %}
-  <meta http-equiv="refresh" content="0; url={% for p in site.pages_by_id[page.redirectid] %}{{p.url}}{% endfor %}" />
+  {% if page.metadata.redirectid and page.metadata.nometaredirect != true %}
+  <meta http-equiv="refresh" content="0; url={{urlbyid(contents, page.metadata.redirectid)}}" />
   {% endif %}
   {% if page.metadata.description %}
   <meta name="description" content="{{ page.metadata.description }}" />
