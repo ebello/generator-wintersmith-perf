@@ -1,6 +1,7 @@
 {
   "locals": {
-    "url": "http://localhost:8888"
+    "url": "http://localhost:8888",
+    "siteTitle": "[SITE TITLE]"
   },
   "templates": "./templates",
   "contents": "./contents",
