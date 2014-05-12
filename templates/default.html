@@ -13,10 +13,10 @@
   {% if page.metadata.description %}
   <meta name="description" content="{{ page.metadata.description }}" />
   {% endif %}
-  <link href="assets/all.css" rel="stylesheet" type="text/css" />
+  <link href="/assets/all.css" rel="stylesheet" type="text/css" />
   {% block styles %}{% endblock %}
-  <link rel="shortcut icon" href="assets/images/favicon.ico" />
-  <!--[if lt IE 9]><script src="assets/html5ie.min.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" />
+  <!--[if lt IE 9]><script src="/assets/html5ie.min.js"></script><![endif]-->
 </head>
 <body>
   <section>
@@ -25,14 +25,15 @@
     <!-- primary navigation -->
     <nav>
       <ul>
-        {% for item in site.primary_navigation %}
-          {% include nav.html %}
+        {% set primary_nav = env.helpers.getPrimaryNavigation(contents) %}
+        {% for item in primary_nav %}
+          {% include "includes/nav.html" %}
         {% endfor %}
       </ul>
     </nav>
   </section>
 
-  <script src="assets/vendor/modernizr.min.js"></script>
+  <script src="/assets/vendor/modernizr.min.js"></script>
   {% block scripts %}{% endblock %}
 
   <script type="text/javascript">
@@ -42,11 +43,11 @@
         load: 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
         complete: function() {
           if (!window.jQuery)
-            Modernizr.load('jquery.min.js');
+            Modernizr.load('/assets/vendor/jquery.min.js');
         }
       },
       {
-        load: ['main.js'{% if page.pagescript %}, '{{page.pagescript}}'{% endif %}]
+        load: ['/assets/main.js'{% if page.pagescript %}, '{{page.pagescript}}'{% endif %}]
       },
       {
         load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
