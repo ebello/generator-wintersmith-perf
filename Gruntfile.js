@@ -117,6 +117,25 @@ module.exports = function (grunt) {
         'Gruntfile.js'
       ]
     },
+    responsive_images: {
+      resize_2x_images: {
+        options: {
+          sizes: [{
+            width: '50%',
+            rename: false
+          }]
+        },
+        files: [{
+          expand: true,
+          src: ['**/2x/*.{jpg,gif,png}'],
+          cwd: 'assets/',
+          dest: 'assets/',
+          rename: function(dest, src) {
+            return dest + src.replace('2x/', '');
+          }
+        }]
+      },
+    },
     sass: {
       dev: {
         files: [{
@@ -281,10 +300,14 @@ module.exports = function (grunt) {
         files: ['contents/**', 'templates/**'],
         tasks: ['wintersmith:build']
       },
-      images: {
-        files: ['assets/**/*.{png,jpg,gif,svg}'],
-        tasks: ['newer:imagemin']
+      images2x: {
+        files: ['assets/**/2x/*.{png,jpg,gif,svg}'],
+        tasks: ['newer:responsive_images:resize_2x_images']
       },
+      // images: {
+      //   files: ['assets/**/*.{png,jpg,gif,svg}'],
+      //   tasks: ['newer:imagemin']
+      // },
       jsclient: {
         files: ['scripts/client/**/*.js'],
         tasks: ['jshint', 'browserify']
@@ -330,12 +353,12 @@ module.exports = function (grunt) {
   // Grunt Tasks
   grunt.registerTask('default', ['dev']);
 
-  grunt.registerTask('build-common', ['clean', 'newer:imagemin', 'wintersmith:build', 'browserify', 'copy']);
+  grunt.registerTask('build-common', ['clean', 'wintersmith:build', 'browserify', 'copy']);
 
   grunt.registerTask('dev', ['build-common', 'sass:dev', 'connect:devserver', 'watch']);
 
   grunt.registerTask('deploy:staging', ['deploy:prepare', 's3:staging']);
   grunt.registerTask('deploy:production', ['deploy:prepare', 's3:production']);
   grunt.registerTask('deploy:test', ['deploy:prepare', 'connect:deploytest']);
-  grunt.registerTask('deploy:prepare', ['build-common', 'sass:prod', 'uglify', 'hashres', 'htmlmin']);
+  grunt.registerTask('deploy:prepare', ['newer:imagemin', 'build-common', 'sass:prod', 'uglify', 'hashres', 'htmlmin']);
 };
