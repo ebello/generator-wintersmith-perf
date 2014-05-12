@@ -1,6 +1,10 @@
+var global = require('./global');
+
 (function($){
 
   var autorotate;
+  var imagesrc = global().imagesrc,
+  preload = global().preload;
 
   function createMultiImg(src, alt) {
     var img=$('<img/>');
@@ -136,7 +140,7 @@
 
     showItem(startIndex);
 
-    preloadImages();
+    global().preloadImages();
 
     $(".rotator > a").on('click', function(){
       clearInterval(autorotate);

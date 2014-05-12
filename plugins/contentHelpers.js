@@ -49,6 +49,9 @@ module.exports = function(env, callback) {
   var isFile = function(currentItem) {
 		return currentItem.hasOwnProperty('__filename');
 	};
+  var isDirectory = function(currentItem) {
+    return !currentItem.hasOwnProperty('__filename');
+  };
 
   function sortByKey(arr, key) {
     return arr.sort(function(a, b) {

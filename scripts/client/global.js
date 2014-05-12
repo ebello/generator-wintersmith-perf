@@ -7,6 +7,16 @@ imagesrc = retina ? 'high' : 'low',
 deferreddatasrc = retina ? 'data-high' : 'data-low',
 deferredsvgsrc = 'data-svg';
 
+
+module.exports = function() {
+  return {
+    imagesrc: imagesrc,
+    preload: preload,
+    preloadImages: preloadImages,
+    loadDeferredImages: loadDeferredImages
+  };
+};
+
 // deferredsvgsrc = Modernizr.svg ? 'data-svg' : 'data-nosvg';
 
 function preloadImages() {

@@ -1,6 +1,8 @@
-// dependent on global for imagesrc
+var global = require('./global');
 
 (function($) {
+
+  var imagesrc = global().imagesrc;
 
   function testContentAttr() {
     // http://jsfiddle.net/westonruter/eAVp2/

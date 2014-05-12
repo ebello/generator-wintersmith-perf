@@ -5,8 +5,7 @@ var imageRotator = require('./imageRotator');
 (function($){
 
   $(function() {
-    loadDeferredImages();
-    console.log('hey there!');
+    global().loadDeferredImages();
   });
 
 })(jQuery);
