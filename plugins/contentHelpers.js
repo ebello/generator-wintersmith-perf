@@ -44,6 +44,10 @@ module.exports = function(env, callback) {
     return primary_nav;
 	};
 
+  env.helpers.rawjson = function(obj) {
+    return JSON.stringify(obj);
+  }
+
   callback();
 
   var isFile = function(currentItem) {
