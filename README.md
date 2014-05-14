@@ -6,7 +6,7 @@ Requires node and npm. `brew install node` gets you both.
 3. `cd [PROJECT NAME]`
 4. `npm install`
 5. `grunt`
-6. Point your browser to http://localhost:8888
+6. Point your browser to [http://localhost:8888](http://localhost:8888)
 
 # Build environment
 Running `grunt` starts the development environment. All HTML, CSS, JS files are monitored and changes will automatically reload Chrome if you have the [extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) installed.
