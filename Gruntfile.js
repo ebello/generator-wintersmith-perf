@@ -164,7 +164,7 @@ module.exports = function (grunt) {
         }
       }
     },
-    aws: grunt.file.readJSON('.grunt-aws.json'),
+    aws: grunt.file.exists('.grunt-aws.json') ? grunt.file.readJSON('.grunt-aws.json') : {},
     s3: {
       options: {
         key: '<%= aws.key %>',
