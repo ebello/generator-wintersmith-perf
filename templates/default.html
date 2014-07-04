@@ -57,7 +57,7 @@
         }
       },
       {
-        load: ['/assets/main.js'{% if page.pagescript %}, '{{page.pagescript}}'{% endif %}]
+        load: ['/assets/main.js'{% if page.metadata.pagescript %}, '{{page.metadata.pagescript}}'{% endif %}]
       },
       {
         load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
