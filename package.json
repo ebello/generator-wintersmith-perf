@@ -5,6 +5,10 @@
   "main": "index.js",
   "author": "Ernie Bello",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ebello/generator-wintersmith-perf.git"
+  },
   "devDependencies": {
     "grunt": "^0.4.4",
     "grunt-autoprefixer": "^0.7.3",
