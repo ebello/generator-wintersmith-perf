@@ -6,7 +6,6 @@
   "author": "Ernie Bello",
   "license": "ISC",
   "dependencies": {
-    "browserify": "^3.46.1",
     "grunt": "^0.4.4",
     "grunt-autoprefixer": "^0.7.3",
     "grunt-browserify": "^2.0.8",
