@@ -24,6 +24,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-hashres": "https://github.com/ebello/grunt-hashres/tarball/master",
     "grunt-newer": "^0.7.0",
+    "grunt-pagespeed": "^0.2.0",
     "grunt-responsive-images": "^0.1.3",
     "grunt-s3": "^0.2.0-alpha.3",
     "grunt-wintersmith": "0.0.2",

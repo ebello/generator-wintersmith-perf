@@ -3,6 +3,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
+    config: grunt.file.exists('config.json') ? grunt.file.readJSON('config.json') : {},
     autoprefixer: {
       multiple_files: {
         expand: true,
@@ -124,6 +125,21 @@ module.exports = function (grunt) {
         'scripts/client/*.js',
         'Gruntfile.js'
       ]
+    },
+    // options: https://github.com/jrcryer/grunt-pagespeed
+    pagespeed: {
+      options: {
+        locale: "en_US",
+        nokey: true,
+        strategy: "desktop",
+        url: '<%= config.locals.url %>'
+      },
+      paths: {
+        options: {
+          paths: ["/index.html"],
+          threshold: 80
+        }
+      }
     },
     responsive_images: {
       resize_2x_images: {
@@ -364,6 +380,8 @@ module.exports = function (grunt) {
   grunt.registerTask('build-common', ['clean', 'wintersmith:build', 'browserify', 'copy']);
 
   grunt.registerTask('dev', ['build-common', 'sass:dev', 'autoprefixer', 'connect:devserver', 'watch']);
+
+  grunt.registerTask('test:pagespeed', ['pagespeed']);
 
   grunt.registerTask('deploy:staging', ['deploy:prepare', 's3:staging']);
   grunt.registerTask('deploy:production', ['deploy:prepare', 's3:production']);
