@@ -3,7 +3,7 @@ module.exports = function(env, callback) {
     var pages = env.helpers.getAllPages(contents);
     var url;
     for (var x = 0; x < pages.length; x++) {
-      if (pages[x].metadata.id == id) {
+      if (pages[x].metadata && pages[x].metadata.id == id) {
         url = pages[x].url;
         break;
       }
@@ -21,10 +21,10 @@ module.exports = function(env, callback) {
         var currentObj = contents[key];
         if (isFile(currentObj)) {
           // console.log('pushing page');
-          if(currentObj.metadata.hasOwnProperty("primarynavorder")) {
+          if(currentObj.metadata && currentObj.metadata.hasOwnProperty("primarynavorder")) {
             currentObj.primarynavorder = currentObj.metadata.primarynavorder;
           }
-          if(currentObj.metadata.hasOwnProperty("navorder")) {
+          if(currentObj.metadata && currentObj.metadata.hasOwnProperty("navorder")) {
             currentObj.navorder = currentObj.metadata.navorder;
           }
           currentObj.filepath.dir = currentObj.filepath.relative.substring(0, currentObj.filepath.relative.lastIndexOf("/"));
@@ -42,7 +42,7 @@ module.exports = function(env, callback) {
   env.helpers.getPrimaryNavigation = function(contents) {
     var pages = env.helpers.getAllPages(contents);
     var primary_nav = pages.filter(function(page) {
-      return page.metadata.primarynavorder;
+      return page.metadata && page.metadata.primarynavorder;
     });
     sortByKey(primary_nav, 'primarynavorder');
     return primary_nav;
@@ -51,7 +51,7 @@ module.exports = function(env, callback) {
   env.helpers.getNavigation = function(contents, folder) {
     var pages = env.helpers.getAllPages(contents);
     var nav = pages.filter(function(page) {
-      return page.metadata.navorder && page.filepath.dir == folder;
+      return page.metadata && page.metadata.navorder && page.filepath.dir == folder;
     });
     sortByKey(nav, 'navorder');
     return nav;
