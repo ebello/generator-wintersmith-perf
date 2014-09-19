@@ -23,6 +23,7 @@
     "grunt-contrib-uglify": "^0.4.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-hashres": "https://github.com/ebello/grunt-hashres/tarball/master",
+    "grunt-html": "^1.4.0",
     "grunt-newer": "^0.7.0",
     "grunt-pagespeed": "^0.2.0",
     "grunt-responsive-images": "^0.1.3",

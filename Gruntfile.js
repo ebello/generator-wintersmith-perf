@@ -92,6 +92,9 @@ module.exports = function (grunt) {
         ]
       }
     },
+    htmllint: {
+      all: ["build/**/*.html"]
+    },
     htmlmin: {
       dist: {
         options: {
@@ -382,6 +385,7 @@ module.exports = function (grunt) {
   grunt.registerTask('dev', ['build-common', 'sass:dev', 'autoprefixer', 'connect:devserver', 'watch']);
 
   grunt.registerTask('test:pagespeed', ['pagespeed']);
+  grunt.registerTask('test:validhtml', ['deploy:prepare', 'htmllint']);
 
   grunt.registerTask('deploy:staging', ['deploy:prepare', 's3:staging']);
   grunt.registerTask('deploy:production', ['deploy:prepare', 's3:production']);
