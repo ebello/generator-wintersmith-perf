@@ -16,26 +16,29 @@ module.exports = function(env, callback) {
 
   env.helpers.getAllPages = function(contents) {
     var output = env.locals.pages || [];
-    if (!env.locals.pages) {
-      for (var key in contents) {
-        var currentObj = contents[key];
-        if (isFile(currentObj)) {
-          // console.log('pushing page');
-          if(currentObj.metadata && currentObj.metadata.hasOwnProperty("primarynavorder")) {
-            currentObj.primarynavorder = currentObj.metadata.primarynavorder;
-          }
-          if(currentObj.metadata && currentObj.metadata.hasOwnProperty("navorder")) {
-            currentObj.navorder = currentObj.metadata.navorder;
-          }
-          currentObj.filepath.dir = currentObj.filepath.relative.substring(0, currentObj.filepath.relative.lastIndexOf("/"));
-          output.push(currentObj);
-        }
-        else if (isDirectory(currentObj)) {
-          output = output.concat(env.helpers.getAllPages(currentObj));
-        }
+
+    for (var key in contents) {
+      var currentObj = contents[key];
+
+      if (isDirectory(currentObj)) {
+        env.helpers.getAllPages(currentObj);
       }
-      env.locals.pages = output;
+
+      if (isFile(currentObj)) {
+        if (currentObj.metadata && currentObj.metadata.hasOwnProperty("primarynavorder")) {
+          currentObj.primarynavorder = currentObj.metadata.primarynavorder;
+        }
+        if (currentObj.metadata && currentObj.metadata.hasOwnProperty("navorder")) {
+          currentObj.navorder = currentObj.metadata.navorder;
+        }
+        if (currentObj.filepath)
+          currentObj.filepath.dir = currentObj.filepath.relative.substring(0, currentObj.filepath.relative.lastIndexOf("/"));
+
+        if (output.indexOf(currentObj) == -1)
+          output.push(currentObj);
+      }
     }
+    env.locals.pages = output;
     return output;
 	};
 
