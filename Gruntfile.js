@@ -123,6 +123,19 @@ module.exports = function (grunt) {
         ]
       }
     },
+    inline: {
+      main: {
+        options: {
+          root: 'build/'
+        },
+        files: [{
+          expand: true,
+          cwd: 'build/',
+          src: ['**/*.html'],
+          dest: 'build/'
+        }]
+      }
+    },
     jshint: {
       client: [
         'scripts/client/*.js',
@@ -390,5 +403,5 @@ module.exports = function (grunt) {
   grunt.registerTask('deploy:staging', ['deploy:prepare', 's3:staging']);
   grunt.registerTask('deploy:production', ['deploy:prepare', 's3:production']);
   grunt.registerTask('deploy:test', ['deploy:prepare', 'connect:deploytest']);
-  grunt.registerTask('deploy:prepare', ['newer:imagemin', 'build-common', 'sass:prod', 'autoprefixer', 'uglify', 'hashres', 'htmlmin']);
+  grunt.registerTask('deploy:prepare', ['newer:imagemin', 'build-common', 'sass:prod', 'autoprefixer', 'uglify', 'inline', 'hashres', 'htmlmin']);
 };

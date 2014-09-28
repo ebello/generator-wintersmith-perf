@@ -22,6 +22,7 @@
     "grunt-contrib-sass": "^0.7.3",
     "grunt-contrib-uglify": "^0.4.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-inline": "https://github.com/circlingthesun/grunt-inline/tarball/master",
     "grunt-hashres": "https://github.com/ebello/grunt-hashres/tarball/master",
     "grunt-html": "^1.4.0",
     "grunt-newer": "^0.7.0",
