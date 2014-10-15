@@ -25,14 +25,18 @@ module.exports = function(env, callback) {
       }
 
       if (isFile(currentObj)) {
+        if (currentObj.filepath) {
+          // remove any index page at the end so that the page gets returned in the navigation list it should be in
+          currentObj.filepath.navdir = currentObj.filepath.relative.replace(/\/index\.[a-zA-Z0-9]+$/, '');
+          currentObj.filepath.navdir = currentObj.filepath.navdir.substring(0, currentObj.filepath.navdir.lastIndexOf("/"));
+          currentObj.filepath.dir = currentObj.filepath.relative.substring(0, currentObj.filepath.relative.lastIndexOf("/"));
+        }
         if (currentObj.metadata && currentObj.metadata.hasOwnProperty("primarynavorder")) {
           currentObj.primarynavorder = currentObj.metadata.primarynavorder;
         }
         if (currentObj.metadata && currentObj.metadata.hasOwnProperty("navorder")) {
           currentObj.navorder = currentObj.metadata.navorder;
         }
-        if (currentObj.filepath)
-          currentObj.filepath.dir = currentObj.filepath.relative.substring(0, currentObj.filepath.relative.lastIndexOf("/"));
 
         if (output.indexOf(currentObj) == -1)
           output.push(currentObj);
@@ -54,7 +58,7 @@ module.exports = function(env, callback) {
   env.helpers.getNavigation = function(contents, folder) {
     var pages = env.helpers.getAllPages(contents);
     var nav = pages.filter(function(page) {
-      return page.metadata && page.metadata.navorder && page.filepath.dir == folder;
+      return page.metadata && page.metadata.navorder && page.filepath.navdir == folder;
     });
     sortByKey(nav, 'navorder');
     return nav;
