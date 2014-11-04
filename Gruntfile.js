@@ -32,7 +32,24 @@ module.exports = function (grunt) {
     clean: {
       build: [
         'build'
+      ],
+      gzip: [
+        'build/**/*.gz'
       ]
+    },
+    compress: {
+      main: {
+        options: {
+          mode: 'gzip'
+        },
+        files: [
+          {expand: true, src: ['build/**/*.css'], dest: '', ext:'.css.gz'},
+          {expand: true, src: ['build/**/*.js'], dest: '', ext:'.js.gz'},
+          {expand: true, src: ['build/**/*.svg'], dest: '', ext:'.svg.gz'},
+          {expand: true, src: ['build/**/*.html'], dest: '', ext:'.html.gz'},
+          {expand: true, src: ['build/**/*.json'], dest: '', ext:'.json.gz'},
+        ]
+      }
     },
     connect: {
       options: {
@@ -61,11 +78,20 @@ module.exports = function (grunt) {
         files: [
           {expand: true, cwd: 'assets/', src: ['**'], dest: 'build/assets/'},
         ]
+      },
+      gzip: {
+        files: [
+          { expand: true, dot: true, cwd: 'build', dest: 'build', src: ['**/*.css.gz'], ext: '.css' },
+          { expand: true, dot: true, cwd: 'build', dest: 'build', src: ['**/*.js.gz'], ext: '.js' },
+          { expand: true, dot: true, cwd: 'build', dest: 'build', src: ['**/*.svg.gz'], ext: '.svg' },
+          { expand: true, dot: true, cwd: 'build', dest: 'build', src: ['**/*.html.gz'], ext: '.html' },
+          { expand: true, dot: true, cwd: 'build', dest: 'build', src: ['**/*.json.gz'], ext: '.json' }
+        ]
       }
     },
     hashres: {
       options: {
-        fileNameFormat: '${name}.${hash}.${ext}',
+        fileNameFormat: '${name}-${hash}.${ext}',
         renameFiles: true
       },
       css: {
@@ -197,135 +223,77 @@ module.exports = function (grunt) {
       }
     },
     aws: grunt.file.exists('.grunt-aws.json') ? grunt.file.readJSON('.grunt-aws.json') : {},
-    s3: {
+    aws_s3: {
       options: {
-        key: '<%= aws.key %>',
-        secret: '<%= aws.secret %>',
-        access: 'public-read'
+        accessKeyId: '<%= aws.key %>',
+        secretAccessKey: '<%= aws.secret %>',
+        access: 'public-read',
+        differential: true,
+        debug: false
       },
       staging: {
         options: {
           bucket: '[INSERT STAGING BUCKET HERE]'
         },
-        upload: [
+        files: [
           {
-            // CSS
-            src: 'build/**/*.css',
-            dest: '/',
-            rel: 'build',
-            options: {
-              gzip: true,
-              headers: {
-                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
-                "Cache-Control": "private",
-                "Expires": new Date(Date.now() + 63072000000).toUTCString()
-              }
+            // add far future expires and gzip headers for all JS, CSS, and SVG files
+            // cache-control private headers are added to get around proxy issues. AWS won't be serving non-gzipped versions so the Vary header doesn't apply. More info: http://code.google.com/speed/page-speed/docs/caching.html#LeverageProxyCaching
+            expand: true,
+            cwd: 'build',
+            src: ['**/*.css', '**/*.js', '**/*.svg'],
+            dest: '',
+            params: {
+              // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+              CacheControl: 'private',
+              Expires: new Date(Date.now() + 63072000000),
+              ContentEncoding: 'gzip'
             }
           },
           {
-            // JS
-            src: 'build/**/*.js',
-            dest: '/',
-            rel: 'build',
-            options: {
-              gzip: true,
-              headers: {
-                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
-                "Cache-Control": "private",
-                "Expires": new Date(Date.now() + 63072000000).toUTCString()
-              }
+            // add far future expires header for all images
+            expand: true,
+            cwd: 'build',
+            src: ['**/*.ico', '**/*.png', '**/*.jpg', '**/*.gif'],
+            dest: '',
+            params: {
+              // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+              Expires: new Date(Date.now() + 63072000000)
             }
           },
           {
-            // SVG
-            src: 'build/**/*.svg',
-            dest: '/',
-            rel: 'build',
-            options: {
-              gzip: true,
-              headers: {
-                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
-                "Cache-Control": "private",
-                "Expires": new Date(Date.now() + 63072000000).toUTCString()
-              }
+            // add gzip headers for all html and json files
+            expand: true,
+            cwd: 'build',
+            src: ['**/*.html', '**/*.json'],
+            dest: '',
+            params: {
+              ContentEncoding: 'gzip'
             }
           },
           {
-            // ICO
-            src: 'build/**/*.ico',
-            dest: '/',
-            rel: 'build',
-            options: {
-              headers: {
-                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
-                "Expires": new Date(Date.now() + 63072000000).toUTCString()
-              }
-            }
+            // upload anything else
+            expand: true,
+            cwd: 'build',
+            src: ['**', '!**/*.css', '!**/*.js', '!**/*.svg', '!**/*.ico', '!**/*.png', '!**/*.jpg', '!**/*.gif', '!**/*.html', '!**/*.json'],
+            dest: ''
           },
           {
-            // PNG
-            src: 'build/**/*.png',
+            // delete files that were removed
+            // expand: true,
+            cwd: 'build',
+            // src: ['**'],
             dest: '/',
-            rel: 'build',
-            options: {
-              gzip: true,
-              headers: {
-                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
-                "Expires": new Date(Date.now() + 63072000000).toUTCString()
-              }
-            }
-          },
-          {
-            // JPG
-            src: 'build/**/*.jpg',
-            dest: '/',
-            rel: 'build',
-            options: {
-              gzip: true,
-              headers: {
-                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
-                "Expires": new Date(Date.now() + 63072000000).toUTCString()
-              }
-            }
-          },
-          {
-            // GIF
-            src: 'build/**/*.gif',
-            dest: '/',
-            rel: 'build',
-            options: {
-              gzip: true,
-              headers: {
-                // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
-                "Expires": new Date(Date.now() + 63072000000).toUTCString()
-              }
-            }
-          },
-          {
-            // HTML
-            src: 'build/**/*.html',
-            dest: '/',
-            rel: 'build',
-            options: {
-              gzip: true
-            }
-          },
-          {
-            // JSON
-            src: 'build/**/*.json',
-            dest: '/',
-            rel: 'build',
-            options: {
-              gzip: true
-            }
-          },
+            differential: true,
+            action: 'delete'
+          }
         ]
       },
       production: {
         options: {
           bucket: '[INSERT PRODUCTION BUCKET HERE]'
         },
-        upload: '<%= s3.staging.upload %>'
+        files: '<%= aws_s3.staging.files %>'
       }
     },
     watch: {
@@ -393,15 +361,16 @@ module.exports = function (grunt) {
   // Grunt Tasks
   grunt.registerTask('default', ['dev']);
 
-  grunt.registerTask('build-common', ['clean', 'wintersmith:build', 'browserify', 'copy']);
+  grunt.registerTask('build-common', ['clean:build', 'wintersmith:build', 'browserify', 'copy:assets', 'copy:js']);
 
   grunt.registerTask('dev', ['build-common', 'sass:dev', 'autoprefixer', 'connect:devserver', 'watch']);
 
   grunt.registerTask('test:pagespeed', ['pagespeed']);
   grunt.registerTask('test:validhtml', ['deploy:prepare', 'htmllint']);
 
-  grunt.registerTask('deploy:staging', ['deploy:prepare', 's3:staging']);
-  grunt.registerTask('deploy:production', ['deploy:prepare', 's3:production']);
+  grunt.registerTask('gzip', ['compress', 'copy:gzip', 'clean:gzip']);
+  grunt.registerTask('deploy:staging', ['deploy:prepare', 'gzip', 's3:staging']);
+  grunt.registerTask('deploy:production', ['deploy:prepare', 'gzip', 's3:production']);
   grunt.registerTask('deploy:test', ['deploy:prepare', 'connect:deploytest']);
   grunt.registerTask('deploy:prepare', ['newer:imagemin', 'build-common', 'sass:prod', 'autoprefixer', 'uglify', 'inline', 'hashres', 'htmlmin']);
 };
