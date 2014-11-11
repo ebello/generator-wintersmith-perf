@@ -8,4 +8,4 @@
 {% else %}
   {% set title = item.title %}
 {% endif %}
-<li{% if url == page.url or page.url.indexOf(item.url) > 0 %} class="selected"{% endif %}><a href="{{ url }}">{{ title }}</a></li>
+<li{% if url == page.url or page.url.indexOf(item.url) > -1 %} class="selected"{% endif %}><a href="{{ url }}">{{ title }}</a></li>
