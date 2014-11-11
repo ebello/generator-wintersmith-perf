@@ -43,11 +43,15 @@ module.exports = function (grunt) {
           mode: 'gzip'
         },
         files: [
-          {expand: true, src: ['build/**/*.css'], dest: '', ext:'.css.gz'},
-          {expand: true, src: ['build/**/*.js'], dest: '', ext:'.js.gz'},
-          {expand: true, src: ['build/**/*.svg'], dest: '', ext:'.svg.gz'},
-          {expand: true, src: ['build/**/*.html'], dest: '', ext:'.html.gz'},
-          {expand: true, src: ['build/**/*.json'], dest: '', ext:'.json.gz'},
+          {
+            cwd: 'build',
+            expand: true,
+            src: ['**/*.css', '**/*.js', '**/*.svg', '**/*.html', '**/*.json'],
+            dest: 'build/',
+            rename: function(dest, src) {
+              return dest + src + '.gz';
+            }
+          }
         ]
       }
     },
@@ -81,17 +85,22 @@ module.exports = function (grunt) {
       },
       gzip: {
         files: [
-          { expand: true, dot: true, cwd: 'build', dest: 'build', src: ['**/*.css.gz'], ext: '.css' },
-          { expand: true, dot: true, cwd: 'build', dest: 'build', src: ['**/*.js.gz'], ext: '.js' },
-          { expand: true, dot: true, cwd: 'build', dest: 'build', src: ['**/*.svg.gz'], ext: '.svg' },
-          { expand: true, dot: true, cwd: 'build', dest: 'build', src: ['**/*.html.gz'], ext: '.html' },
-          { expand: true, dot: true, cwd: 'build', dest: 'build', src: ['**/*.json.gz'], ext: '.json' }
+          {
+            expand: true,
+            dot: true,
+            cwd: 'build',
+            dest: 'build/',
+            src: ['**/*.css.gz', '**/*.js.gz', '**/*.svg.gz', '**/*.html.gz', '**/*.json.gz'],
+            rename: function(dest, src) {
+              return dest + src.replace(/\.gz/, '');
+            }
+          }
         ]
       }
     },
     hashres: {
       options: {
-        fileNameFormat: '${name}-${hash}.${ext}',
+        fileNameFormat: '${name}.${hash}.${ext}',
         renameFiles: true
       },
       css: {
