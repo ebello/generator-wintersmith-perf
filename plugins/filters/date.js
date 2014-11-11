@@ -4,6 +4,6 @@ module.exports = function(date, format) {
   if (!date) {
     return '';
   }
-  var s = moment.utc(date).format(format);
+  var s = moment.utc(new Date(date)).format(format);
   return s;
 };
