@@ -126,21 +126,21 @@ module.exports = function (grunt) {
         src: [ 'build/**/*.js' ],
         dest: 'build/**/*.html'
       },
-      // images: {
-      //   src: [
-      //     'build/**/*.png',
-      //     'build/**/*.jpg',
-      //     'build/**/*.svg',
-      //     'build/**/*.ico'
-      //   ],
-      //   dest: [
-      //     'build/**/*.html',
-      //     'build/**/*.js',
-      //     'build/**/*.css',
-      //     'build/**/*.md',
-      //     'build/**/*.json'
-      //   ]
-      // }
+      images: {
+        src: [
+          'build/**/*.png',
+          'build/**/*.jpg',
+          'build/**/*.svg',
+          'build/**/*.ico'
+        ],
+        dest: [
+          'build/**/*.html',
+          'build/**/*.js',
+          'build/**/*.css',
+          'build/**/*.md',
+          'build/**/*.json'
+        ]
+      }
     },
     htmllint: {
       all: ["build/**/*.html"]
