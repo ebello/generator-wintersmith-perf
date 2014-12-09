@@ -1,6 +1,7 @@
 {
   "locals": {
     "url": "http://localhost:8888",
+    "cdn": "//[CDN].cloudfront.net/",
     "siteTitle": "[SITE TITLE]"
   },
   "templates": "./templates",

@@ -37,6 +37,21 @@ module.exports = function (grunt) {
         'build/**/*.gz'
       ]
     },
+    cdn_static_assets: {
+      options: {
+        cdn: '<%= config.locals.cdn %>',
+        directory: 'build',
+        staticAssetExtensions: ['css', 'js', 'ico', 'jpg', 'png', 'gif', 'svg', 'mp4', 'webm']
+      },
+      production: {
+        files: [{
+          expand: true,
+          cwd: 'build',
+          src: '**/*.{css,html}',
+          dest: 'build'
+        }]
+      }
+    },
     compress: {
       main: {
         options: {
@@ -111,21 +126,21 @@ module.exports = function (grunt) {
         src: [ 'build/**/*.js' ],
         dest: 'build/**/*.html'
       },
-      images: {
-        src: [
-          'build/**/*.png',
-          'build/**/*.jpg',
-          'build/**/*.svg',
-          'build/**/*.ico'
-        ],
-        dest: [
-          'build/**/*.html',
-          'build/**/*.js',
-          'build/**/*.css',
-          'build/**/*.md',
-          'build/**/*.json'
-        ]
-      }
+      // images: {
+      //   src: [
+      //     'build/**/*.png',
+      //     'build/**/*.jpg',
+      //     'build/**/*.svg',
+      //     'build/**/*.ico'
+      //   ],
+      //   dest: [
+      //     'build/**/*.html',
+      //     'build/**/*.js',
+      //     'build/**/*.css',
+      //     'build/**/*.md',
+      //     'build/**/*.json'
+      //   ]
+      // }
     },
     htmllint: {
       all: ["build/**/*.html"]
@@ -228,7 +243,7 @@ module.exports = function (grunt) {
         files: '<%= sass.dev.files %>',
         options: {
           style: 'compressed',
-          sourcemap: 'none'
+          // sourcemap: 'none'
         }
       }
     },
@@ -379,8 +394,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test:validhtml', ['deploy:prepare', 'htmllint']);
 
   grunt.registerTask('gzip', ['compress', 'copy:gzip', 'clean:gzip']);
-  grunt.registerTask('deploy:staging', ['deploy:prepare', 'gzip', 's3:staging']);
-  grunt.registerTask('deploy:production', ['deploy:prepare', 'gzip', 's3:production']);
+  grunt.registerTask('deploy:staging', ['deploy:prepare', 'gzip', 'aws_s3:staging']);
+  grunt.registerTask('deploy:production', ['deploy:prepare', 'gzip', 'aws_s3:production']);
   grunt.registerTask('deploy:test', ['deploy:prepare', 'connect:deploytest']);
-  grunt.registerTask('deploy:prepare', ['newer:imagemin', 'build-common', 'sass:prod', 'autoprefixer', 'uglify', 'inline', 'hashres', 'htmlmin']);
+  grunt.registerTask('deploy:prepare', ['newer:imagemin', 'build-common', 'sass:prod', 'autoprefixer', 'uglify', 'inline', 'hashres', 'cdn_static_assets', 'htmlmin']);
 };
