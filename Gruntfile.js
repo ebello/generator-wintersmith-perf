@@ -227,7 +227,8 @@ module.exports = function (grunt) {
       prod: {
         files: '<%= sass.dev.files %>',
         options: {
-          style: 'compressed'
+          style: 'compressed',
+          sourcemap: 'none'
         }
       }
     },
