@@ -29,6 +29,25 @@ module.exports = function (grunt) {
         // }
       }
     },
+    browserSync: {
+      dev: {
+        options: {
+          open: false,
+          server: {
+            baseDir: "build"
+          },
+          watchTask: true
+        }
+      }
+    },
+    bsReload: {
+      css: {
+        reload: "all.css"
+      },
+      all: {
+        reload: true
+      }
+    },
     clean: {
       build: [
         'build'
@@ -74,11 +93,6 @@ module.exports = function (grunt) {
       options: {
         base: 'build/',
         hostname: '0.0.0.0'
-      },
-      devserver: {
-        options: {
-          port: 8888
-        }
       },
       deploytest: {
         options: {
@@ -323,15 +337,16 @@ module.exports = function (grunt) {
     },
     watch: {
       options : {
-        livereload: true
+        // livereload: true
+        spawn: false
       },
       css: {
         files: ['styles/**/*.scss'],
-        tasks: ['sass:dev', 'autoprefixer']
+        tasks: ['sass:dev', 'autoprefixer', 'bsReload:css']
       },
       html: {
         files: ['contents/**', 'templates/**'],
-        tasks: ['wintersmith:build']
+        tasks: ['wintersmith:build', 'bsReload:all']
       },
       images2x: {
         files: ['assets/**/2x/*.{png,jpg,gif,svg}'],
@@ -343,11 +358,11 @@ module.exports = function (grunt) {
       // },
       jsclient: {
         files: ['scripts/client/**/*.js'],
-        tasks: ['jshint', 'browserify']
+        tasks: ['jshint', 'browserify', 'bsReload:all']
       },
       jsvendor: {
         files: ['scripts/**/*.js', '!scripts/client/**/*.js'],
-        tasks: ['copy:js']
+        tasks: ['copy:js', 'bsReload:all']
       }
     },
     uglify: {
@@ -388,7 +403,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build-common', ['clean:build', 'wintersmith:build', 'browserify', 'copy:assets', 'copy:js']);
 
-  grunt.registerTask('dev', ['build-common', 'sass:dev', 'autoprefixer', 'connect:devserver', 'watch']);
+  grunt.registerTask('dev', ['build-common', 'sass:dev', 'autoprefixer', 'browserSync', 'watch']);
 
   grunt.registerTask('test:pagespeed', ['pagespeed']);
   grunt.registerTask('test:validhtml', ['deploy:prepare', 'htmllint']);
