@@ -250,13 +250,13 @@ module.exports = function (grunt) {
           ext: '.css'
         }],
         options: {
-          style: 'nested'
+          outputStyle: 'nested'
         }
       },
       prod: {
         files: '<%= sass.dev.files %>',
         options: {
-          style: 'compressed',
+          outputStyle: 'compressed',
           // sourcemap: 'none'
         }
       }
