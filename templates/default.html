@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!--[if lt IE 9]><html lang="en" class="ie no-js{% if page.metadata.htmlclass %} {{page.metadata.htmlclass}}{% endif %}{% if (page.metadata.redirect or page.metadata.redirectid) and page.metadata.nometaredirect != true %} redirect{% endif %}"><![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en" class="no-js{% if page.metadata.htmlclass %} {{page.metadata.htmlclass}}{% endif %}{% if (page.metadata.redirect or page.metadata.redirectid) and page.metadata.nometaredirect != true %} redirect{% endif %}"> <!--<![endif]-->
+<html lang="en" class="no-js{% if page.metadata.htmlclass %} {{page.metadata.htmlclass}}{% endif %}{% if (page.metadata.redirect or page.metadata.redirectid) and page.metadata.nometaredirect != true %} redirect{% endif %}">
 <head>
   <meta charset="utf-8" />
   <title>{{page.title}}{% if page.url != '/' %} - {{siteTitle}}{% endif %}</title>
@@ -13,10 +12,20 @@
   {% if page.metadata.description %}
   <meta name="description" content="{{ page.metadata.description }}" />
   {% endif %}
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <link href="/assets/all.css" rel="stylesheet" type="text/css" />
   {% block styles %}{% endblock %}
   <link rel="shortcut icon" href="/assets/images/favicon.ico" />
-  <!--[if lt IE 9]><script src="/assets/html5ie.min.js"></script><![endif]-->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '[TRACKING ID]', 'auto');
+    ga('send', 'pageview');
+  </script>
 </head>
 <body>
   <section>
@@ -44,25 +53,12 @@
   </section>
 
   <script src="/assets/vendor/modernizr.min.js"></script>
-  {% block scripts %}{% endblock %}
-
-  <script type="text/javascript">
-    window._gaq = [['_setAccount','[ANALYTICS CODE]'],['_trackPageview'],['_trackPageLoadTime']];
-    Modernizr.load([
-      {
-        load: 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
-        complete: function() {
-          if (!window.jQuery)
-            Modernizr.load('/assets/vendor/jquery.min.js');
-        }
-      },
-      {
-        load: ['/assets/main.js'{% if page.metadata.pagescript %}, '{{page.metadata.pagescript}}'{% endif %}]
-      },
-      {
-        load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-      }
-    ]);
+  <script src="/assets/main.js" async></script>
+  <script>
+    // Picture element HTML5 shiv
+    document.createElement( "picture" );
   </script>
+  <script src="/assets/vendor/picturefill.min.js" async></script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>
