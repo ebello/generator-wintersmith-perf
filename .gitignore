@@ -2,4 +2,6 @@
 .sass-cache
 node_modules
 build
-.grunt-aws.json
+aws-credentials.json
+.awspublish-*
+.vscode

@@ -6,6 +6,9 @@
   },
   "templates": "./templates",
   "contents": "./contents",
+  "nunjucks": {
+    "autoescape": false
+  },
   "output": "./build",
   "plugins": [
   	"wintersmith-nunjucks",
