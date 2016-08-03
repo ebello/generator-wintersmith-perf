@@ -1,10 +1,10 @@
-# sudo: required
-# before_install:
-#   - echo "Installing libvips..."
-#   - sudo add-apt-repository -y ppa:lovell/precise-backport-vips
-#   - sudo apt-get update
-#   - sudo apt-get install -y libvips-dev
-#   - echo "Completed libvips installation."
+sudo: required
+before_install:
+  - echo "Installing libvips..."
+  - sudo add-apt-repository -y ppa:lovell/precise-backport-vips
+  - sudo apt-get update
+  - sudo apt-get install -y libvips-dev
+  - echo "Completed libvips installation."
 language: node_js
 node_js:
   - "stable"
@@ -15,25 +15,20 @@ before_script:
 script: gulp test
 # after_success:
   # - gulp coverage:coveralls
-  # - gulp deploy --target=dev
-  # - chmod +x tasks/deploy.sh
-# deploy:
-#   provider: script
-#   script: tasks/deploy.sh
-# env:
-#   global:
-#     - secure: K3hf8HixVtQEwpb9jkMzezOodow6nwsIn+qJWW1eHEV3YkpyjPGbETTz9h79VVa0MrRsUGpIefEwmJUfytjAJKl2bwS64vCIMqpjMGjfZDsQ9xqHHLqrr73uVSyt7ymcj3rVskSafQhPGtYwNcIoWBMpC/SluwqjxwRuqKUu/Pg1FStt0OXkjVuk4A1B1YJ4em2al27Az/hFGRzkKiQK6LAI2kkZ7U03UMPaIRF9Z560txQLjuO/VjuRZQB2Fy8bZ30yBYe6/0g3NFDFn39HSFFsSyjSm9oXemHDNJc6mMVePNrbh/O0zuFZNIxXvYHousbYi6GvlYGyzqCEhAj4MHKR3EQ+bVXCeGJGPCpgztUnoZakfxGRIgcpHx6PaxUHZnK3pqAy4BaltRLyu0Kdqe8SjyY1OPe4KYBwGKIkPqeefj9A98q30ff7W8lVrOkuAL+l5BtHIMC8Tu/ABSKfM0WHQ/NybS/K7lUdEZSDoh1Ay8HcrXRXdyvwOIlqNj6JMAmaIJCae7mbrQSYftarCxs6JobFrUyxg7Eh8VLDPiYfB0daU7u9DxGKm5MgKUUfguEKRG5UIe1BymbtVa1PyeRRGiJG1DAvD7vw7mN5W0qFf4BlogDJgP9JrpU4EVg7fHmo5RH1tqFCowNlfI0pPFlzinetZBNfnWl/0rtJ4EA=
-#     - secure: BVq1sK/16MCIHoJjOLVG5Ggi4Sp3MAbuogQasvkX3Xb1dqRf7jZOrjzCibuu0ZLYxUCsZcCWMq3rylNtcwB39ve2ew+3e9OEQeVs/UQHZg/Zy0wTR3bHN2voWWs+rsgYBbkkLAIaxOkRhZfWCniZU9S6Blg3DNc9kZpr4k3Dz0snorybBEDY/aw90uscNJZolH4Wt4cJFyLKXY0S2MWdhofsZMOXrRfc0cXvIeTlEyOromRBbQt0qtKVbSGpGORuw8NDGyGVeaWtd3qD1HQrFZJfQpbriIOcn9QGoI91lcfQ/Y5ti84vqhPQhlHkT3dfmrtsboQj71DLuniP1o23SXFR71dndQY2tfbp5k4qalScNq6HEZjXOTbqIkuE3uUyzmC6JMaAYV6UoWUw8QQ9OYLIwaMFxTMb6eM+ciCI9xTcFPqOOrpl1N185jpYQaAIiZhKcAUkaHb7UDkqOG3VPQ804fWFP7fhWme85A9ti5YdCCpcWFoPmG78G2sGEqTQFR9OlHPhH90RGFVmAQ4KcPMtaX8m8y9+Z7Dae/prXDHHxYIQnfAq32ds/BHZSdOAjq6tde63g+cs0OUxDlS+WWkZeDPcA1Q9ydHj56uyRzxzaoJK5eGhQAGtLY1RswLb/89Pgxu93mQPcpF3biUXQzsmkpWsQy+He1T4K876qYg=
-#   matrix:
-#     - CXX=g++-4.8
-# addons:
-#   apt:
-#     sources:
-#       - ubuntu-toolchain-r-test
-#       # - trusty-backport-vips https://github.com/travis-ci/apt-source-whitelist/pull/137 https://github.com/lovell/sharp/issues/187#issuecomment-121789796
-#     packages:
-#       # - libvips-dev
-#       - g++-4.8
+env:
+  global:
+    - secure: K3hf8HixVtQEwpb9jkMzezOodow6nwsIn+qJWW1eHEV3YkpyjPGbETTz9h79VVa0MrRsUGpIefEwmJUfytjAJKl2bwS64vCIMqpjMGjfZDsQ9xqHHLqrr73uVSyt7ymcj3rVskSafQhPGtYwNcIoWBMpC/SluwqjxwRuqKUu/Pg1FStt0OXkjVuk4A1B1YJ4em2al27Az/hFGRzkKiQK6LAI2kkZ7U03UMPaIRF9Z560txQLjuO/VjuRZQB2Fy8bZ30yBYe6/0g3NFDFn39HSFFsSyjSm9oXemHDNJc6mMVePNrbh/O0zuFZNIxXvYHousbYi6GvlYGyzqCEhAj4MHKR3EQ+bVXCeGJGPCpgztUnoZakfxGRIgcpHx6PaxUHZnK3pqAy4BaltRLyu0Kdqe8SjyY1OPe4KYBwGKIkPqeefj9A98q30ff7W8lVrOkuAL+l5BtHIMC8Tu/ABSKfM0WHQ/NybS/K7lUdEZSDoh1Ay8HcrXRXdyvwOIlqNj6JMAmaIJCae7mbrQSYftarCxs6JobFrUyxg7Eh8VLDPiYfB0daU7u9DxGKm5MgKUUfguEKRG5UIe1BymbtVa1PyeRRGiJG1DAvD7vw7mN5W0qFf4BlogDJgP9JrpU4EVg7fHmo5RH1tqFCowNlfI0pPFlzinetZBNfnWl/0rtJ4EA=
+    - secure: BVq1sK/16MCIHoJjOLVG5Ggi4Sp3MAbuogQasvkX3Xb1dqRf7jZOrjzCibuu0ZLYxUCsZcCWMq3rylNtcwB39ve2ew+3e9OEQeVs/UQHZg/Zy0wTR3bHN2voWWs+rsgYBbkkLAIaxOkRhZfWCniZU9S6Blg3DNc9kZpr4k3Dz0snorybBEDY/aw90uscNJZolH4Wt4cJFyLKXY0S2MWdhofsZMOXrRfc0cXvIeTlEyOromRBbQt0qtKVbSGpGORuw8NDGyGVeaWtd3qD1HQrFZJfQpbriIOcn9QGoI91lcfQ/Y5ti84vqhPQhlHkT3dfmrtsboQj71DLuniP1o23SXFR71dndQY2tfbp5k4qalScNq6HEZjXOTbqIkuE3uUyzmC6JMaAYV6UoWUw8QQ9OYLIwaMFxTMb6eM+ciCI9xTcFPqOOrpl1N185jpYQaAIiZhKcAUkaHb7UDkqOG3VPQ804fWFP7fhWme85A9ti5YdCCpcWFoPmG78G2sGEqTQFR9OlHPhH90RGFVmAQ4KcPMtaX8m8y9+Z7Dae/prXDHHxYIQnfAq32ds/BHZSdOAjq6tde63g+cs0OUxDlS+WWkZeDPcA1Q9ydHj56uyRzxzaoJK5eGhQAGtLY1RswLb/89Pgxu93mQPcpF3biUXQzsmkpWsQy+He1T4K876qYg=
+  matrix:
+    - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      # - trusty-backport-vips https://github.com/travis-ci/apt-source-whitelist/pull/137 https://github.com/lovell/sharp/issues/187#issuecomment-121789796
+    packages:
+      # - libvips-dev
+      - g++-4.8
 # notifications:
 #   email: false
 #   slack:
