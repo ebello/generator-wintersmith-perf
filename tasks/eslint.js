@@ -9,8 +9,8 @@ module.exports = (gulp, plugins, utilities) => {
                         "mocha": true,
                         "es6": true
                     },
-                    "ecmaFeatures": {
-                        "modules": true
+                    "parserOptions": {
+                        "sourceType": "module"
                     },
                     "extends": "eslint:recommended"
                 }

@@ -19,7 +19,7 @@ module.exports = {
         }
     },
     paths: {
-        JS_SRC: './scripts/**/*.js',
+        JS_SRC: './scripts/client/**/*.js',
         BABEL_PRESETS: ["stage-0", "es2015"],
         TEST_FILES: './tests/**/*.js',
         HTML_FILES: ['./contents/**', './templates/**'],
