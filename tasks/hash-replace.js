@@ -3,10 +3,11 @@ module.exports = (gulp, plugins, utilities) => {
     var manifest = gulp.src(`./${utilities.paths.BUILD_FOLDER}/rev-manifest.json`);
     return gulp.src([
       `${utilities.paths.BUILD_FOLDER}/**/*.html`,
+      `${utilities.paths.BUILD_FOLDER}/**/*.json`,
       `${utilities.paths.BUILD_FOLDER}/**/*.css`,
       `${utilities.paths.BUILD_FOLDER}/**/*.js`
     ])
-      .pipe(plugins.revReplace({manifest: manifest}))
+      .pipe(plugins.revReplace({manifest: manifest, replaceInExtensions: ['.js', '.css', '.html', '.json']}))
       .pipe(gulp.dest(utilities.paths.BUILD_FOLDER))
   };
 };
