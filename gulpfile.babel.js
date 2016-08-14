@@ -27,6 +27,7 @@ gulp.task('deploy', getTask('deploy'));
 gulp.task('eslint', getTask('eslint'));
 gulp.task('hash', getTask('hash'));
 gulp.task('hash-replace', getTask('hash-replace'));
+gulp.task('html-hint', getTask('html-hint'));
 gulp.task('html-min', getTask('html-min'));
 gulp.task('inline', getTask('inline'));
 gulp.task('responsive-images', getTask('responsive-images'));
@@ -36,10 +37,10 @@ gulp.task('test', getTask('test'));
 gulp.task('wintersmith', getTask('wintersmith'));
 
 gulp.task('default', function(done) {
-  plugins.runSequence('clean', ['wintersmith', 'scripts', 'copy-assets', 'copy-vendor-js'], 'sass', 'eslint', 'browser-sync', function() {
+  plugins.runSequence('clean', ['wintersmith', 'scripts', 'copy-assets', 'copy-vendor-js'], 'sass', 'eslint', 'html-hint', 'browser-sync', function() {
     gulp.watch(plugins.utilities.paths.JS_SRC, ['eslint', 'scripts']);
     gulp.watch('styles/**/*', ['sass']);
-    gulp.watch(plugins.utilities.paths.HTML_FILES, function() {plugins.runSequence('wintersmith', 'browser-reload')} );
+    gulp.watch(plugins.utilities.paths.HTML_FILES, function() {plugins.runSequence('wintersmith', 'html-hint', 'browser-reload')} );
     done();
   });
 });
