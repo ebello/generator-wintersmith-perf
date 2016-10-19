@@ -21,6 +21,7 @@ module.exports = function(env, callback) {
       var currentObj = contents[key];
 
       if (isDirectory(currentObj)) {
+        env.locals.pages = output;
         env.helpers.getAllPages(currentObj);
       }
 
