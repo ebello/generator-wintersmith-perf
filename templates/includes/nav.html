@@ -1,5 +1,7 @@
 {% if item.metadata.redirect %}
   {% set url = item.metadata.redirect %}
+{% elseif item.metadata.redirectid %}
+  {% set url = urlbyid(contents, item.metadata.redirectid) %}
 {% else %}
   {% set url = item.url %}
 {% endif %}
