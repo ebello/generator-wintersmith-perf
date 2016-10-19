@@ -64,6 +64,26 @@ module.exports = function(env, callback) {
     return nav;
   };
 
+  env.helpers.getBreadcrumb = function(contents, page) {
+    var pages = env.helpers.getAllPages(contents);
+    var breadcrumb = [];
+    breadcrumb.push(page);
+    if (page.filepath && page.filepath.navdir) {
+      var dirs = page.filepath.navdir.split('/');
+      for (var x = dirs.length; x >= 0; x--) {
+        var dir = dirs.slice(0, x).join('/');
+        if (dir)
+          dir += '/'
+        var parent = pages.find(function(p) {
+          return p.url === '/' + dir;
+        });
+        if (parent)
+          breadcrumb.push(parent);
+      }
+    }
+    return breadcrumb;
+  };
+
   env.helpers.rawjson = function(obj) {
     return JSON.stringify(obj);
   }
