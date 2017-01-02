@@ -7,7 +7,7 @@ module.exports = (gulp, plugins, utilities) => {
       ])
       .pipe(plugins.cdnizer({
         defaultCDNBase: utilities.paths.CDN,
-        files: ['**/*.js', '**/*.css', '**/*.ico', '**/*.jpg', '**/*.png', '**/*.gif', '**/*.svg', '**/*.mp4', '**/*.webm']
+        files: ['/assets/**/*.js', '/assets/**/*.css', '/assets/**/*.ico', '/assets/**/*.jpg', '/assets/**/*.png', '/assets/**/*.gif', '/assets/**/*.svg', '/assets/**/*.mp4', '/assets/**/*.webm']
       }))
       .pipe(gulp.dest(utilities.paths.BUILD_FOLDER))
     }
