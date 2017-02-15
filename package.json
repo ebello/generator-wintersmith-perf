@@ -59,6 +59,6 @@
     "watchify": "^3.7.0",
     "wintersmith": "^2.3.2",
     "wintersmith-nunjucks": "^1.1.0",
-    "yargs": "^5.0.0"
+    "yargs": "^6.2.0"
   }
 }
