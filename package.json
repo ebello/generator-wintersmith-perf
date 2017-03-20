@@ -51,7 +51,7 @@
     "normalize-scss": "^6.0.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.5",
-    "sinon": "^1.17.2",
+    "sinon": "^2.1.0",
     "streamify": "^0.2.5",
     "superagent": "^3.4.3",
     "vinyl-buffer": "^1.0.0",
