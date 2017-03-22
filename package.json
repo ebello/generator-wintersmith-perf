@@ -53,7 +53,7 @@
     "run-sequence": "^1.1.5",
     "sinon": "^1.17.2",
     "streamify": "^0.2.5",
-    "superagent": "^3.4.3",
+    "superagent": "^3.5.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
