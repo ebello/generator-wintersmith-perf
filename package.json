@@ -46,7 +46,7 @@
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
-    "install": "^0.8.1",
+    "install": "^0.8.8",
     "moment": "^2.14.1",
     "normalize-scss": "^6.0.0",
     "require-dir": "^0.3.0",
