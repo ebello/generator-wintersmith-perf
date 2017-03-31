@@ -25,7 +25,7 @@ describe('StaticSite', () => {
       expect(txt).toMatch(/Wintersmith/);
       expect(txt).toMatch(/\/assets\/all-ff07927b72.css/);
       expect(txt).toMatch(/\/assets\/vendor\/modernizr-91f8a42384.min.js/);
-      expect(txt).toMatch(/\/assets\/main-f783cf9683.js/);
+      expect(txt).toMatch(/\/assets\/main-ceb4f8e198.js/);
       done();
     });
   });
