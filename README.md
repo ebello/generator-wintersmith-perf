@@ -1,5 +1,7 @@
 # generator-wintersmith-perf [![devDependency Status](https://david-dm.org/ebello/generator-wintersmith-perf/dev-status.svg)](https://david-dm.org/ebello/generator-wintersmith-perf#info=devDependencies)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ebello/generator-wintersmith-perf.svg)](https://greenkeeper.io/)
+
 A set of packages and build scripts to enable a highly optimized and performant static site using wintersmith. Enables easy deployment to S3.
 
 ## Setup
