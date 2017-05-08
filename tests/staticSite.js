@@ -23,7 +23,7 @@ describe('StaticSite', () => {
 
       var txt = fs.readFileSync(indexHtml).toString('utf-8');
       expect(txt).toMatch(/Wintersmith/);
-      expect(txt).toMatch(/\/assets\/all-ff07927b72.css/);
+      expect(txt).toMatch(/\/assets\/all-b9610b10be.css/);
       expect(txt).toMatch(/\/assets\/vendor\/modernizr-91f8a42384.min.js/);
       expect(txt).toMatch(/\/assets\/main-ceb4f8e198.js/);
       done();
