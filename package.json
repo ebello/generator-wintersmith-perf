@@ -57,7 +57,7 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
-    "wintersmith": "^2.4.0",
+    "wintersmith": "^2.4.1",
     "wintersmith-nunjucks": "^1.1.0",
     "yargs": "^8.0.1"
   }
