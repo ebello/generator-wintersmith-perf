@@ -19,7 +19,7 @@ describe('StaticSite', () => {
     }, function (err, stdout) {
       expect(function() {
         fs.accessSync(indexHtml, fs.F_OK)
-      }).toNotThrow();
+      }).not.toThrow();
 
       var txt = fs.readFileSync(indexHtml).toString('utf-8');
       expect(txt).toMatch(/Wintersmith/);
