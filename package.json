@@ -52,7 +52,7 @@
     "require-dir": "^0.3.0",
     "run-sequence": "^2.0.0",
     "sinon": "^3.0.0",
-    "streamify": "^0.2.5",
+    "streamify": "^0.3.0",
     "superagent": "^3.5.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
