@@ -55,7 +55,7 @@
     "streamify": "^0.2.5",
     "superagent": "^3.5.2",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
+    "vinyl-source-stream": "^1.1.2",
     "watchify": "^3.7.0",
     "wintersmith": "^2.4.1",
     "wintersmith-nunjucks": "^1.1.0",
