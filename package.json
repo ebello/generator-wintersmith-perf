@@ -54,7 +54,7 @@
     "sinon": "^3.0.0",
     "streamify": "^0.2.5",
     "superagent": "^3.5.2",
-    "vinyl-buffer": "^1.0.0",
+    "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
     "wintersmith": "^2.4.1",
