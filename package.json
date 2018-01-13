@@ -37,7 +37,7 @@
     "gulp-istanbul": "^1.0.0",
     "gulp-load-plugins": "^1.1.0",
     "gulp-mocha": "^4.2.0",
-    "gulp-notify": "^3.0.0",
+    "gulp-notify": "^3.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-responsive": "^2.0.0",
     "gulp-responsive-images": "0.0.3",
