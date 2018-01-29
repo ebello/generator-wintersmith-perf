@@ -48,7 +48,7 @@
     "gulp-util": "^3.0.7",
     "install": "^0.10.0",
     "moment": "^2.18.1",
-    "normalize-scss": "^7.0.0",
+    "normalize-scss": "^7.0.1",
     "require-dir": "^0.3.0",
     "run-sequence": "^2.0.0",
     "sinon": "^3.0.0",
