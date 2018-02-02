@@ -25,7 +25,7 @@
     "glob": "^7.0.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^4.0.0",
-    "gulp-awspublish": "^3.0.1",
+    "gulp-awspublish": "3.3.0",
     "gulp-awspublish-router": "^0.1.1",
     "gulp-cdnizer": "^1.1.7",
     "gulp-clean": "^0.3.1",
